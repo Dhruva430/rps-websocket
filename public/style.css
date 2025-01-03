@@ -1,0 +1,64 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  /* border: 1px red solid; */
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    color: white;
+  }
+}
+
+body {
+  min-height: 100vh;
+  background-image: radial-gradient(circle at top, #010409, #141f39);
+  background-repeat: no-repeat;
+  background-position: top top;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+}
+.rps {
+  background-color: rgb(40, 82, 89);
+  border-radius: 999px;
+  width: 85%;
+  height: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* position: relative; */
+}
+.rps-container {
+  --size: 150px;
+  margin: 40px;
+  grid-template-columns: repeat(3, var(--size));
+  grid-template-rows: repeat(3, var(--size));
+  display: grid;
+  width: fit-content;
+  /* background-image: url(./img/triangle.svg);
+  background-repeat: no-repeat; */
+  grid-template-areas:
+    ". p ."
+    ". t ."
+    "r . s";
+  flex-shrink: 0;
+  margin-block: 80px;
+  place-items: center;
+  margin-inline: auto;
+}
+.rps.rock {
+  grid-area: r;
+}
+
+.rps.paper {
+  grid-area: p;
+}
+.rps.scissors {
+  grid-area: s;
+}
+.rps-container .triangle {
+  grid-area: t;
+  width: calc(var(--size) * 3 - 150px);
+  height: calc(var(--size) * 3);
+}

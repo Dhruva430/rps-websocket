@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+  <div id="myid"></div>
+  <div class="rps-container">
+    <img src="./img/triangle.svg" class="triangle">
+    <div id="rock" data-value="rock" class="rps rock">rock</div>
+    <div id="paper" data-value="paper" class="rps paper">paper</div>
+    <div id="scissors" data-value="scissors" class="rps scissors">scissors</div>
+  </div>
+  <button type="submit" for="restart">restart</button>
+
+</body>
+
+<script src="./scripts/index.js"></script>
+
+</html>
