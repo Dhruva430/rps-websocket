@@ -1,13 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Koulen&display=swap");
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+
   /* border: 1px red solid; */
 }
 @media (prefers-color-scheme: dark) {
   body {
     color: white;
   }
+}
+
+:root {
+  --col-size: 150px;
+  --color-scissors: #8553e4;
+  --color-rock: #50bed1;
+  --color-paper: #eca215;
+  font-family: "Koulen", serif;
+}
+
+.hidden {
+  display: none !important;
 }
 
 body {
@@ -18,22 +32,63 @@ body {
   background-attachment: fixed;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+.header {
+  justify-content: space-between;
+  align-self: center;
+  /* align-self: center; */
+  display: flex;
+  font-size: large;
+  width: 500px;
+  line-height: 40px;
+  gap: 5px;
+  border: #606e85 5px solid;
+  border-radius: 10px;
+  padding: 20px;
+}
+.header h1 {
+  width: 150px;
+  text-align: center;
+}
+.header .player-names {
+  display: flex;
+  gap: 40px;
+}
+.header .you {
+  padding: 20px;
+  /* margin: 20px; */
+  color: black;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding-inline: 20px;
 }
 .rps {
-  background-color: rgb(40, 82, 89);
+  background-color: rgb(255, 255, 255);
   border-radius: 999px;
   width: 85%;
   height: 85%;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* position: relative; */
+  border: #eca215 solid 10px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  position: relative;
+  box-shadow: inset 3px 5px 1px #00000047;
+}
+.rps:hover {
+  transform: translateY(-10px) scale(1.1);
+
+  box-shadow: 0 0 0 10px rgba(34, 34, 34, 0.5), 0 0 0 20px rgba(69, 68, 68, 0.4),
+    0 0 0 30px rgba(110, 110, 110, 0.2), 0 0 0 40px rgba(201, 201, 201, 0.1),
+    inset 3px 5px 1px #00000047; /* Fourth ring */
 }
 .rps-container {
-  --size: 150px;
   margin: 40px;
-  grid-template-columns: repeat(3, var(--size));
-  grid-template-rows: repeat(3, var(--size));
+  grid-template-columns: repeat(3, var(--col-size));
+  grid-template-rows: repeat(3, var(--col-size));
   display: grid;
   width: fit-content;
   /* background-image: url(./img/triangle.svg);
@@ -47,18 +102,101 @@ body {
   place-items: center;
   margin-inline: auto;
 }
+/* .rps-container {
+  display: none !important;
+} */
 .rps.rock {
   grid-area: r;
+  border-color: #50bed1;
 }
 
 .rps.paper {
   grid-area: p;
+  border-color: #eca215;
 }
 .rps.scissors {
   grid-area: s;
+  border-color: #8553e4;
 }
 .rps-container .triangle {
   grid-area: t;
-  width: calc(var(--size) * 3 - 150px);
-  height: calc(var(--size) * 3);
+  width: calc(var(--col-size) * 3 - 130px);
+  height: calc(var(--col-size) * 3);
+}
+
+.restart-button {
+  width: 80px;
+  align-self: center;
+  padding: 5px;
+}
+
+.dashboard {
+  display: flex;
+  gap: 10rem;
+  justify-content: center;
+  /* Temporary height, we will not need it after adding in enough content */
+  animation: testAnimation 1s ease-in-out;
+  margin-top: 10rem;
+}
+
+.dashboard .player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.dashboard .player .move {
+  --color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  color: white;
+  background-color: rgb(255, 255, 255);
+  max-width: 100%;
+  border-radius: 999px;
+  border: var(--color) solid 15px;
+  box-shadow: inset 3px 5px 1px #00000047;
+  /* align-items: center; */
+}
+.player span {
+  /* width: 100px; */
+  text-align: center;
+  align-self: center;
+}
+@keyframes testAnimation {
+  0% {
+    scale: 0.5;
+    opacity: 0;
+  }
+  100% {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+#model {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.374);
+  text-align: center;
+}
+#model .content {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  max-width: 300px;
+  width: 100%;
+  padding: 8px;
+  color: black;
+  border-radius: 10px;
+}
+#model .content input {
+  outline: none;
+  font-family: "Koulen", serif;
+  padding-left: 10px;
 }

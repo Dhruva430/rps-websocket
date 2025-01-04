@@ -4,7 +4,7 @@ import express from "express";
 import { router as apiRouter } from "./api/index.js";
 import { Server as SocketIOServer } from "socket.io";
 import { createServer } from "http";
-import { SocketUser } from "../socketUser.js";
+import { SocketUser } from "./socketUser.js";
 
 const app = express();
 const server = createServer(app);

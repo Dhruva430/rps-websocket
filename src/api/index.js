@@ -80,6 +80,7 @@ router.post("/signin", async (req, res) => {
       res.status(400).json({ errors: e.errors });
     } else {
       res.status(500).json({ message: "Signin failed" });
+      return;
     }
     res.json({});
     return;

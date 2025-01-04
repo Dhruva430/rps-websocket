@@ -27,6 +27,9 @@ export class SocketUser {
   listen() {
     this.socket;
     this.socket.on("move", (move) => console.log("Your move", move));
+    this.socket.on("name", (name) => {
+      this.player.name = name;
+    });
   }
   disconnect() {
     console.log(this.socket.id + " is disconnected");

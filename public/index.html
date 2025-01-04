@@ -11,14 +11,45 @@
 
 <body>
   <div id="myid"></div>
-  <div class="rps-container">
-    <img src="./img/triangle.svg" class="triangle">
-    <div id="rock" data-value="rock" class="rps rock">rock</div>
-    <div id="paper" data-value="paper" class="rps paper">paper</div>
-    <div id="scissors" data-value="scissors" class="rps scissors">scissors</div>
+  <div class="header">
+    <h1>ROCK
+      PAPER
+      SCISSORS</h1>
+    <div class="player-names">
+      <div class="you">Dhruva</div>
+      <div class="you">Muffin</div>
+    </div>
   </div>
-  <button type="submit" for="restart">restart</button>
+  <div id="rps" class="rps-container">
+    <img src="./img/triangle.svg" class="triangle">
+    <div class="hover"></div>
+    <div id="rock" data-value="rock" class="rps rock"><img src="/img/icon-rock.svg"></div>
+    <div id="paper" data-value="paper" class="rps paper"><img src="/img/icon-paper.svg"></div>
+    <div id="scissors" data-value="scissors" class="rps scissors"><img src="/img/icon-scissors.svg"></div>
+  </div>
+  <div id="dashboard" class="dashboard hidden">
 
+    <div id="player" class="player">
+      <span>Your Move!</span>
+      <div class="move">
+      </div>
+    </div>
+    <div id="opponent" class="player">
+      <span>Your Move!</span>
+      <div class="move">
+      </div>
+    </div>
+
+  </div>
+  <button class="restart-button" onclick="window.location.reload()" type="submit" for="restart">Play Again</button>
+
+  <div id="model">
+    <div class="content">
+      <label>Enter Name!</label>
+      <input id="nameInput" placeholder="Your Name" style="max-width: 300px; width: 100%;height: 30px;" type="text">
+    </div>
+
+  </div>
 </body>
 
 <script src="./scripts/index.js"></script>

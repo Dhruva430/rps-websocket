@@ -1,4 +1,5 @@
 import { v4 as uuid } from "uuid";
+import { unknown } from "zod";
 export class Game {
   /**
    * @type {Player[]}
@@ -34,6 +35,12 @@ export class Game {
 
     this.players.splice(idx, 1);
   }
+  getCurrentPlayer(id) {
+    return this.players.find((p) => p.socket.id == id);
+  }
+  getOpponent(id) {
+    return this.players.find((p) => p.socket.id != id);
+  }
 
   json() {
     return {
@@ -62,6 +69,7 @@ export class Game {
 
     var winner = null;
     const [p1, p2] = this.players;
+
     // if (p1.move == "paper") {
     //   if (p2.move == "rock") {
     //     winner = p1;
@@ -86,12 +94,19 @@ export class Game {
     } else {
       winner = p2;
     }
-    p1.move = null;
-    p2.move = null;
 
     if (winner) {
-      this.broadCast("game:won", { winner: winner.json() });
+      this.players.forEach((p) => {
+        p.socket.emit("game:won", {
+          winner: winner.json(),
+          player: p.json(),
+          opponent: this.getOpponent(p.socket.id).json(),
+        });
+      });
+      // this.broadCast("game:won", { winner: winner.json() });
     }
+    p1.move = null;
+    p2.move = null;
   }
 }
 
@@ -100,6 +115,11 @@ export class Player {
    * @type {Socket}
    */
   socket;
+
+  /**
+   * @type {string}
+   */
+  name;
 
   /**
    *  @type {Game}
@@ -116,6 +136,7 @@ export class Player {
    */
   constructor(socket) {
     this.socket = socket;
+    this.name = "unknown";
   }
 
   /**
@@ -132,6 +153,6 @@ export class Player {
   }
 
   json() {
-    return { id: this.socket.id, name: "Dhruva" };
+    return { id: this.socket.id, name: this.name, move: this.move };
   }
 }
