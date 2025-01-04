@@ -19,6 +19,7 @@ export class Game {
       throw new Error("Game is full");
     }
     this.players.push(player);
+    player.joinedGame(this);
     if (this.players.length >= 2) {
       this.ready();
     }
@@ -54,9 +55,27 @@ export class Game {
       player.socket.emit(ev, message);
     }
   }
+  broadcastNameUpdate(player) {
+    const opponent = this.getOpponent(player.socket.id);
+    if (opponent) {
+      opponent.socket.emit("updateName", {
+        playerId: player.socket.id,
+        name: player.name,
+      });
+    }
+  }
 
   ready() {
     this.broadCast("game:ready", this.json());
+    this.players.forEach((player) => {
+      const opponent = this.getOpponent(player.socket.id);
+      if (opponent) {
+        opponent.socket.emit("updateName", {
+          playerId: player.socket.id,
+          name: player.name,
+        });
+      }
+    });
   }
 
   /**

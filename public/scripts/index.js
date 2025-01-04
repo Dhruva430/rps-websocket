@@ -6,6 +6,8 @@ const rps = document.getElementById("rps");
 const nameInput = document.getElementById("nameInput");
 const dashboard = document.getElementById("dashboard");
 const model = document.getElementById("model");
+const span = document.getElementById("you");
+const opponentNameElement = document.getElementById("opponentName");
 // const you = document.getElementById("yourMove");
 // const opponent = document.getElementById("opponentMove");
 const images = {
@@ -19,6 +21,11 @@ const socket = io();
 if (localStorage.getItem("name")) {
   socket.emit("name", localStorage.getItem("name"));
   model.classList.add("hidden");
+  span.textContent = localStorage.getItem("name");
+}
+
+if (localStorage.getItem("opponentName")) {
+  opponentNameElement.textContent = localStorage.getItem("opponentName");
 }
 
 document.querySelectorAll(".rps").forEach((e) => {
@@ -69,9 +76,11 @@ socket.on("game:draw", (data) => {
 });
 
 nameInput.addEventListener("change", (e) => {
-  console.log(nameInput.value);
-  socket.emit("name", nameInput.value);
-  localStorage.setItem("name", nameInput.value);
+  const name = nameInput.value;
+  console.log(name);
+  socket.emit("setName", name);
+  localStorage.setItem("name", name);
+  span.textContent = name;
   model.classList.add("hidden");
 });
 
@@ -85,7 +94,9 @@ function setupPlayer(player, move) {
   moveElement.innerHTML = `<img src= "${images[move]}">`;
   moveElement.style.setProperty("--color", `var(--color-${move})`);
 }
-// socket.on("game:join", (data) => {
-//   console.log("player Joined the game");
-//   join = true;
-// });
+socket.on("updateName", ({ playerId, name }) => {
+  if (playerId !== socket.id) {
+    opponentNameElement.textContent = name;
+    localStorage.setItem("opponentName", name);
+  }
+});
