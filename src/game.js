@@ -1,5 +1,4 @@
 import { v4 as uuid } from "uuid";
-import { unknown } from "zod";
 export class Game {
   /**
    * @type {Player[]}
@@ -83,17 +82,11 @@ export class Game {
    */
 
   runMove(player) {
-    // const p1 = this.players[0];
-    // const p2 = this.players[1];
+    const opponent = this.getOpponent(player.socket.id);
 
     var winner = null;
     const [p1, p2] = this.players;
 
-    // if (p1.move == "paper") {
-    //   if (p2.move == "rock") {
-    //     winner = p1;
-    //   }
-    // }
     if (!p1 || !p2) {
       return;
     }
@@ -101,8 +94,18 @@ export class Game {
     if (!p1.move || !p2.move) {
       return;
     }
+    if (opponent) {
+      opponent.socket.emit("opponent:waiting", {
+        opponentName: player.name,
+      });
+    }
     if (p1.move == p2.move) {
-      this.broadCast("game:draw");
+      this.players.forEach((p) => {
+        p.socket.emit("game:draw", {
+          player: p.json(),
+          opponent: this.getOpponent(p.socket.id).json(),
+        });
+      });
       return;
     } else if (
       (p1.move == "rock" && p2.move == "scissors") ||
@@ -124,6 +127,9 @@ export class Game {
       });
       // this.broadCast("game:won", { winner: winner.json() });
     }
+    this.players.forEach((p) => {
+      p.socket.emit(`opponent:moveComplete`);
+    });
     p1.move = null;
     p2.move = null;
   }
